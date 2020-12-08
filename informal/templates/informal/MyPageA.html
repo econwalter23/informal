@@ -1,0 +1,34 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    Informal Game: Empresa Informal: grupo A
+{% endblock %}
+
+{% block content %}
+
+    <p>
+        Usted a sido designado al grupo A y se le ha asignado un monto de {{Constants.media_A}} ECU.
+    </p>
+
+    <p>
+        Usted recibirá una transferencia del Estado, que se recolecta del sector formal (grupo B)
+        en esta etapa del juego.
+    </p>
+
+    <p>
+        Una vez que reciba la transferencia usted podrá escoger en seguir perteneciendo al
+        grupo A o cambiar al grupo B.
+    </p>
+
+    <p>
+        Tenga presente que el grupo B tiene en promedio ganancias considerablemente más
+        altas (que son asignadas aleatoriamente), sin embargo, afronta i) pago de impuestos
+        equivalentes al 18 por ciento de su monto total y ii) la posibilidad que usted realice pérdidas
+        (también asignadas aleatoriamente)
+    </p>
+
+
+    {% next_button %}
+
+{% endblock %}

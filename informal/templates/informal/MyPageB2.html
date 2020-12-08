@@ -1,0 +1,25 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    Informal Game: Empresa Formal: grupo B
+{% endblock %}
+
+{% block content %}
+    
+    <p>
+        Producto de su actividad empresarial usted registró {{p.product}} ECU. 
+    </p>
+
+    <p>
+        No obstante, luego de pagar impuestos (si corresponde) usted dispone de {{p.endowment_B}} el cual mantendrá
+        independientemente si cambia de grupo o no.
+    </p>
+
+    {% formfields %}
+    
+    {% next_button %}
+
+    {% include Constants.instructions_button %}
+
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    Informal Game:
+{% endblock %}
+
+{% block content %}
+
+    {% include Constants.instructions_template %}
+    
+    <p>
+        Estas instrucciones estarán disponibles en las siguientes pantallas en caso desees consultarlas.
+    </p>
+
+    {% next_button %}
+
+{% endblock %}
