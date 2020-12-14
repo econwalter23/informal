@@ -1,0 +1,77 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    Informal Game
+{% endblock %}
+
+{% block content %}
+
+    <p>
+    A continuación se le muestra la <strong>matriz de pagos esperados</strong>:
+    </p>
+    
+    <table class="egt">
+
+        <thead>
+  
+            <tr>
+  
+                <th></th>
+
+                <th></th>
+  
+                <th colspan="2">Empresa Formal</th>
+  
+            </tr>
+  
+            <tr>
+        
+                <th></th>
+  
+                <th scope="col"> Estrategias </th>
+  
+                <th> Transitar</th>
+  
+                <th> No transitar</th>
+  
+            </tr>
+  
+        </thead>
+  
+        <tbody>
+  
+            <tr>
+  
+                <th rowspan="3">Empresa Informal</th>
+  
+                <th>Transitar</th>
+  
+                <td>({{ Constants.e_payment_tA }}, {{ Constants.e_payment_tB_tA }} )</td>
+  
+                <td>( {{ Constants.e_payment_tA }}, {{ Constants.e_payment_ntB }} )</td>
+  
+            </tr>
+  
+            <tr>
+  
+                <th>No transitar</th>
+  
+                <td>({{ Constants.endow_A }}, {{ Constants.endow_B }} )</td>
+  
+                <td>( {{ Constants.e_payment_ntA_ntB }}, {{ Constants.e_payment_ntB }} )</td>
+
+            </tr>
+        
+        </tbody>
+  
+    </table>
+
+    {% formfields %}
+
+    {% next_button %}
+
+    {% include Constants.instructions_button %}
+    {% include Constants.instructionsA_button %}
+
+{% endblock %}
