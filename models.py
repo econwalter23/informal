@@ -85,6 +85,7 @@ class Subsession(BaseSubsession):
 class Group(BaseGroup):
 
     def set_prod(self):
+        '''Calcula los choques de productividad de cada participante dependiendo si esta solo en un sector o acompañado'''
         p1 = self.get_player_by_id(1)
         p2 = self.get_player_by_id(2)
         
@@ -94,6 +95,7 @@ class Group(BaseGroup):
         p2.prodcompa = random.uniform(Constants.s_minBcompa,Constants.s_maxBcompa)
 
     def set_payoffs(self):
+        '''Calcula el pago de los participantes tomando en cuenta la decision del otro'''
         p1 = self.get_player_by_id(1)
         p2 = self.get_player_by_id(2)
         
@@ -117,6 +119,13 @@ class Group(BaseGroup):
 
 class Player(BasePlayer):
     
+    def role(self):
+        '''Asigna el sector al que pertenecera cada jugador'''
+        if self.id_in_group == 1:
+            return 'Informal'
+        else:
+            return 'Formal'
+
     decision = models.BooleanField(label='¿ Le gustaría continuar en su grupo actual o transitar al otro grupo?',
                                     choices=[ 
                                         [True,'Transitar'],
