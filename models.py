@@ -8,7 +8,7 @@ from otree.api import (
     Currency as c,
     currency_range,
 )
-
+import numpy as np
 import random
 
 author = 'Richard Asto & Walter Ruelas'
@@ -22,6 +22,7 @@ class Constants(BaseConstants):
 
     name_in_url = 'informal_game'
     players_per_group = 2
+    players_per_session = 20
     num_rounds = 5
     
     #endowments y parámetros iniciales 
@@ -46,6 +47,11 @@ class Constants(BaseConstants):
     s_maxAsolo = float( ((a_star*impuesto/(1-impuesto))*(endow_A)/(alto_solo))-((1-alto_solo)/alto_solo)*s_minAsolo )
     s_maxAcompa = float(A_compa*endow_A)
     s_minAcompa = float( (a_star*impuesto/((1-impuesto)*(1-alto_compa)))*endow_A - (alto_compa/(1-alto_compa))*s_maxAcompa )
+    
+    elemAsolo = [s_minAsolo, s_maxAsolo]
+    probAsolo = [0.1, 0.9]
+    elemAcompa = [s_minAcompa, s_maxAcompa]
+    probAcompa = [0.9, 0.1]
 
     # rangos de la empresa formal si se queda sola o comparte
     s_minBsolo = -float(B_solo*endow_B)
@@ -53,6 +59,10 @@ class Constants(BaseConstants):
     s_maxBsolo = float( ((b_star*impuesto/(1-impuesto))*endow_B/(alto_solo))-((1-alto_solo)/(alto_solo))*s_minBsolo )
     s_minBcompa = float( ((b_star*impuesto/(1-impuesto))*endow_B/(1-alto_compa))-(alto_compa/(1-alto_compa))*s_maxBcompa )
     
+    elemBsolo = [s_minBsolo, s_maxBsolo]
+    probBsolo = [0.1, 0.9]
+    elemBcompa = [s_minBcompa, s_maxBcompa]
+    probBcompa = [0.9, 0.1]
 
     # pagos esperados minimos y máximos de la informal
     p_nAtB = c(endow_A)
@@ -80,42 +90,31 @@ class Constants(BaseConstants):
     
 
 class Subsession(BaseSubsession):
-    pass
+    pass    
 
 class Group(BaseGroup):
-
-    def set_prod(self):
-        '''Calcula los choques de productividad de cada participante dependiendo si esta solo en un sector o acompañado'''
-        p1 = self.get_player_by_id(1)
-        p2 = self.get_player_by_id(2)
-        
-        p1.prodsolo = random.uniform(Constants.s_minAsolo,Constants.s_maxAsolo)
-        p1.prodcompa = random.uniform(Constants.s_minAcompa,Constants.s_maxAcompa)
-        p2.prodsolo = random.uniform(Constants.s_minBsolo,Constants.s_maxBsolo)
-        p2.prodcompa = random.uniform(Constants.s_minBcompa,Constants.s_maxBcompa)
 
     def set_payoffs(self):
         '''Calcula el pago de los participantes tomando en cuenta la decision del otro'''
         p1 = self.get_player_by_id(1)
         p2 = self.get_player_by_id(2)
         
-
         if p1.decision == 'Transitar':
             if p2.decision == 'Transitar':
-                p1.payoff = (1-Constants.impuesto)*(Constants.endow_A + p1.prodsolo)
-                p2.payoff = Constants.endow_B + Constants.impuesto*(Constants.endow_A + p1.prodsolo)
+                p1.payoff = (1-Constants.impuesto)*(Constants.endow_A + p1.prodAsolo)
+                p2.payoff = Constants.endow_B + Constants.impuesto*(Constants.endow_A + p1.prodAsolo)
             
             else:
                 
-                p1.payoff = (1-Constants.impuesto)*(Constants.endow_A + p1.prodcompa)
-                p2.payoff = (1-Constants.impuesto)*(Constants.endow_B + p2.prodcompa)
+                p1.payoff = (1-Constants.impuesto)*(Constants.endow_A + p1.prodAcompa)
+                p2.payoff = (1-Constants.impuesto)*(Constants.endow_B + p2.prodBcompa)
         else:    
             if p2.decision == 'Transitar':
                 p1.payoff = Constants.endow_A
                 p2.payoff = Constants.endow_B
             else:
-                p1.payoff = Constants.endow_A + Constants.impuesto*(Constants.endow_B + p2.prodsolo)
-                p2.payoff = (1-Constants.impuesto)*(Constants.endow_B + p2.prodsolo)
+                p1.payoff = Constants.endow_A + Constants.impuesto*(Constants.endow_B + p2.prodBsolo)
+                p2.payoff = (1-Constants.impuesto)*(Constants.endow_B + p2.prodBsolo)
 
 class Player(BasePlayer):
     
@@ -126,10 +125,25 @@ class Player(BasePlayer):
         else:
             return 'Formal'
 
-    decision = models.BooleanField(label='¿ Le gustaría continuar en su grupo actual o transitar al otro grupo?',
+    def prod(self):
+        '''Asignar una choque de productividad a cada jugador'''
+        if self.id_in_group == 1:
+            return dict(
+                prodAsolo = np.random.choice(Constants.elemAsolo,1,Constants.probAsolo),
+                prodAcompa = np.random.choice(Constants.elemAcompa,1,Constants.probAcompa)
+            )
+        else:
+            return dict(
+                prodBsolo = np.random.choice(Constants.elemBsolo,1,Constants.probBsolo),
+                prodBcompa = np.random.choice(Constants.elemBcompa,1,Constants.probBcompa)
+            )
+            
+
+    decision = models.BooleanField(label='¿ Le gustaría continuar en su sector actual o transitar al otro sector?',
                                     choices=[ 
                                         [True,'Transitar'],
                                         [False, 'No transitar']
                                     ]
                                     )
-    
+
+
