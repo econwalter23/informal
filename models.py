@@ -27,31 +27,31 @@ class Constants(BaseConstants):
     #endowments y parámetros iniciales 
     endow_B = c(100)
     endow_A = c(endow_B*0.25)
-    impuesto = 0.18
-    p_like = 0.5
-    q_like = 0.5
-    b_star = (1/((1-impuesto)**(2)-q_like*impuesto*impuesto*(1-p_like)))*( (1-impuesto)**(2) + q_like*(1-impuesto)*( (endow_A/endow_B)+impuesto*(1-p_like) ) )
-    a_star = 1 + (((1-p_like)/(1-impuesto))*(1-impuesto + impuesto*b_star)*(endow_B/endow_A))
+    impuesto = float(0.18)
+    p_like = float(0.5)
+    q_like = float(0.5)
+    b_star = float( ((1/((1-impuesto)**(2)-(q_like*impuesto*impuesto)*(1-p_like)))*( (1-impuesto)**(2) + (q_like*(1-impuesto))*( (endow_A/endow_B)+impuesto*(1-p_like) ) )) )
+    a_star = float( (1 + (((1-p_like)/(1-impuesto))*(1-impuesto + (impuesto*b_star))*(endow_B/endow_A))) )
     
     #rango de las choques de productividad
     A_solo = 1
     A_compa = 2 
-    B_solo = 0.5
+    B_solo = float(0.5)
     B_compa = 2
-    alto_solo = 0.9
-    alto_compa = 0.1
+    alto_solo = float(0.9)
+    alto_compa = float(0.1)
 
     # rangos de la empresa informal si se queda sola o comparte
-    s_minAsolo = -c(A_solo*endow_A)
-    s_maxAsolo = c( ((a_star*impuesto/(1-impuesto))*endow_A/(alto_solo))-((1-alto_solo)/alto_solo)*s_minAsolo )
-    s_maxAcompa = c(A_compa*endow_A)
-    s_minAcompa = c( (a_star*impuesto/((1-impuesto)*(1-alto_compa)))*endow_A - (alto_compa/(1-alto_compa))*s_maxAcompa )
+    s_minAsolo = -float(A_solo*endow_A)
+    s_maxAsolo = float( ((a_star*impuesto/(1-impuesto))*(endow_A)/(alto_solo))-((1-alto_solo)/alto_solo)*s_minAsolo )
+    s_maxAcompa = float(A_compa*endow_A)
+    s_minAcompa = float( (a_star*impuesto/((1-impuesto)*(1-alto_compa)))*endow_A - (alto_compa/(1-alto_compa))*s_maxAcompa )
 
     # rangos de la empresa formal si se queda sola o comparte
-    s_minBsolo = -c(B_solo*endow_B)
-    s_maxBcompa = c(B_compa*endow_B)
-    s_maxBsolo = c( ((b_star*impuesto/(1-impuesto))*endow_B/(alto_solo))-((1-alto_solo)/alto_solo)*s_minBsolo )
-    s_minBcompa = c( ((b_star*impuesto/(1-impuesto))*endow_B/(1-alto_compa))-(alto_compa/(1-alto_compa))*s_maxBcompa )
+    s_minBsolo = -float(B_solo*endow_B)
+    s_maxBcompa = float(B_compa*endow_B)
+    s_maxBsolo = float( ((b_star*impuesto/(1-impuesto))*endow_B/(alto_solo))-((1-alto_solo)/(alto_solo))*s_minBsolo )
+    s_minBcompa = float( ((b_star*impuesto/(1-impuesto))*endow_B/(1-alto_compa))-(alto_compa/(1-alto_compa))*s_maxBcompa )
     
 
     # pagos esperados minimos y máximos de la informal
