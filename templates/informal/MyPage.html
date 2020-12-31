@@ -1,4 +1,4 @@
-{% extends "global/Page.html" %}
+  {% extends "global/Page.html" %}
 {% load otree static %}
 
 {% block title %}
@@ -7,14 +7,14 @@
 
 {% block content %}
 
-    {% include Constants.instructionsA_template %}
+    {% include Constants.instructions_template_A %}
 
     <p>
         Estas guías estarán disponibles en las siguientes pantallas en caso desees consultarlas.
-    </p>
+    </p>  
 
     <p>
-        A continuación se le muestra la <strong>matriz de pagos esperados</strong>:
+        A continuación se le muestra la <strong>matriz de pagos esperados</strong> con los valores mínimos y máximos:
     </p>
 
     <table class="egt">
@@ -53,9 +53,9 @@
       
             <th>Transitar</th>
       
-            <td>({{ Constants.e_payment_tA }}, {{ Constants.e_payment_tB_tA }} )</td>
+            <td>[{{ Constants.p_tAtBmin }} - {{ Constants.p_tAtBmax }}] , [{{ Constants.p_tBtAmin }} - {{ Constants.p_tBtAmax }}] </td>
       
-            <td>( {{ Constants.e_payment_tA }}, {{ Constants.e_payment_ntB }} )</td>
+            <td>[{{ Constants.p_tAnBmin }} - {{ Constants.p_tAnBmax }}] , [{{ Constants.p_nBtAmin }} - {{ Constants.p_nBtAmax }}] </td>
       
           </tr>
       
@@ -63,9 +63,9 @@
       
             <th>No transitar</th>
       
-            <td>({{ Constants.endow_A }}, {{ Constants.endow_B }} )</td>
+            <td>[{{ Constants.p_nAtB }} - {{ Constants.p_nAtB }}] , [{{ Constants.p_tBnA }} - {{ Constants.p_tBnA }}] </td>
       
-            <td>( {{ Constants.e_payment_ntA_ntB }}, {{ Constants.e_payment_ntB }} )</td>
+            <td>[{{ Constants.p_nAnBmin }} - {{ Constants.p_nAnBmax }}] , [{{ Constants.p_nBnAmin }} - {{ Constants.p_nBnAmax }}] </td>
             
         </tbody>
       
