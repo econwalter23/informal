@@ -8,7 +8,7 @@ from otree.api import (
     Currency as c,
     currency_range,
 )
-import numpy as np
+
 import random
 
 author = 'Richard Asto & Walter Ruelas'
@@ -31,8 +31,7 @@ class Constants(BaseConstants):
     impuesto = float(0.18)
     p_like = float(0.5)
     q_like = float(0.5)
-    b_star = float( ((1/((1-impuesto)**(2)-(q_like*impuesto*impuesto)*(1-p_like)))*( (1-impuesto)**(2) + (q_like*(1-impuesto))*( (endow_A/endow_B)+impuesto*(1-p_like) ) )) )
-    a_star = float( (1 + (((1-p_like)/(1-impuesto))*(1-impuesto + (impuesto*b_star))*(endow_B/endow_A))) )
+    
     
     #rango de las choques de productividad
     A_solo = 1
@@ -42,45 +41,20 @@ class Constants(BaseConstants):
     alto_solo = float(0.9)
     alto_compa = float(0.1)
 
-    # rangos de la empresa informal si se queda sola o comparte
-    s_minAsolo = -float(A_solo*endow_A)
-    s_maxAsolo = float( ((a_star*impuesto/(1-impuesto))*(endow_A)/(alto_solo))-((1-alto_solo)/alto_solo)*s_minAsolo )
-    s_maxAcompa = float(A_compa*endow_A)
-    s_minAcompa = float( (a_star*impuesto/((1-impuesto)*(1-alto_compa)))*endow_A - (alto_compa/(1-alto_compa))*s_maxAcompa )
-    
-    elemAsolo = [s_minAsolo, s_maxAsolo]
+    # prob de los choques empresa informal
     probAsolo = [0.1, 0.9]
-    elemAcompa = [s_minAcompa, s_maxAcompa]
     probAcompa = [0.9, 0.1]
 
-    # rangos de la empresa formal si se queda sola o comparte
-    s_minBsolo = -float(B_solo*endow_B)
-    s_maxBcompa = float(B_compa*endow_B)
-    s_maxBsolo = float( ((b_star*impuesto/(1-impuesto))*endow_B/(alto_solo))-((1-alto_solo)/(alto_solo))*s_minBsolo )
-    s_minBcompa = float( ((b_star*impuesto/(1-impuesto))*endow_B/(1-alto_compa))-(alto_compa/(1-alto_compa))*s_maxBcompa )
-    
-    elemBsolo = [s_minBsolo, s_maxBsolo]
+    # prob de los choques empresa formal
     probBsolo = [0.1, 0.9]
-    elemBcompa = [s_minBcompa, s_maxBcompa]
     probBcompa = [0.9, 0.1]
 
     # pagos esperados minimos y máximos de la informal
     p_nAtB = c(endow_A)
-    p_tAtBmin = c((1-impuesto)*(endow_A + s_minAsolo))
-    p_tAtBmax = c((1-impuesto)*(endow_A + s_maxAsolo))
-    p_nAnBmin = c(endow_A + (endow_B + s_minBsolo)*impuesto)
-    p_nAnBmax = c(endow_A + (endow_B + s_maxBsolo)*impuesto)
-    p_tAnBmin = c((1-impuesto)*(endow_A + s_minAcompa))
-    p_tAnBmax = c((1-impuesto)*(endow_A + s_maxAcompa))
 
     # pagos esperados minimos y máximos de la formal
     p_tBnA = c(endow_B)
-    p_tBtAmin = c(endow_B + impuesto*(endow_A + s_minAsolo))
-    p_tBtAmax = c(endow_B + impuesto*(endow_A + s_maxAsolo))
-    p_nBnAmin = c((1-impuesto)*(endow_B + s_minBsolo))
-    p_nBnAmax = c((1-impuesto)*(endow_B + s_maxBsolo))
-    p_nBtAmin = c((1-impuesto)*(endow_B + s_minBcompa))
-    p_nBtAmax = c((1-impuesto)*(endow_B + s_maxBcompa))
+
 
     # intrucciones
     instructions_template = 'informal/instructions.html'
@@ -90,7 +64,48 @@ class Constants(BaseConstants):
     
 
 class Subsession(BaseSubsession):
-    pass    
+
+    def creating_session(self):
+        #a_star y b_Star que se usan para calcular los pagos
+        self.session.vars['b_star'] = ((1/((1-Constants.impuesto)**(2)-(Constants.q_like*Constants.impuesto*Constants.impuesto)*(1-Constants.p_like)))*( (1-Constants.impuesto)**(2) + (Constants.q_like*(1-Constants.impuesto))*( (Constants.endow_A/Constants.endow_B)+Constants.impuesto*(1-Constants.p_like) ) ))
+        self.session.vars['a_star'] = (1 + (((1-Constants.p_like)/(1-Constants.impuesto))*(1-Constants.impuesto + (Constants.impuesto*self.session.vars['b_star']))*(Constants.endow_B/Constants.endow_A)))
+            
+        # rangos de la empresa informal si se queda sola o comparte
+        self.session.vars['s_minAsolo'] = -(Constants.A_solo*Constants.endow_A)
+        self.session.vars['s_maxAsolo'] = ((self.session.vars['a_star']*Constants.impuesto/(1-Constants.impuesto))*(Constants.endow_A)/(Constants.alto_solo))-((1-Constants.alto_solo)/Constants.alto_solo)*self.session.vars['s_minAsolo']
+        self.session.vars['s_maxAcompa'] = (Constants.A_compa*Constants.endow_A)
+        self.session.vars['s_minAcompa'] = ( (self.session.vars['a_star']*Constants.impuesto/((1-Constants.impuesto)*(1-Constants.alto_compa)))*Constants.endow_A - (Constants.alto_compa/(1-Constants.alto_compa))*self.session.vars['s_maxAcompa'] )    
+
+        self.session.vars['elemAsolo'] = [self.session.vars['s_minAsolo'] , self.session.vars['s_maxAsolo']]
+        self.session.vars['elemAcompa'] = [self.session.vars['s_minAcompa'], self.session.vars['s_maxAcompa']]
+
+        # rangos de la empresa formal si se queda sola o comparte
+        self.session.vars['s_minBsolo'] = -(Constants.B_solo*Constants.endow_B)
+        self.session.vars['s_maxBcompa'] = (Constants.B_compa*Constants.endow_B)
+        self.session.vars['s_maxBsolo'] = ( ((self.session.vars['b_star']*Constants.impuesto/(1-Constants.impuesto))*Constants.endow_B/(Constants.alto_solo))-((1-Constants.alto_solo)/(Constants.alto_solo))*self.session.vars['s_minBsolo'] )
+        self.session.vars['s_minBcompa'] = ( ((self.session.vars['b_star']*Constants.impuesto/(1-Constants.impuesto))*Constants.endow_B/(1-Constants.alto_compa))-(Constants.alto_compa/(1-Constants.alto_compa))*self.session.vars['s_maxBcompa'] )
+
+        self.session.vars['elemBsolo'] = [self.session.vars['s_minBsolo'], self.session.vars['s_maxBsolo']]
+        self.session.vars['elemBcompa'] = [self.session.vars['s_minBcompa'], self.session.vars['s_maxBcompa']]
+
+        # pagos minimos y máximos de la informal
+        self.session.vars['p_tAtBmin'] = ((1-Constants.impuesto)*(Constants.endow_A + self.session.vars['s_minAsolo']))
+        self.session.vars['p_tAtBmax'] = ((1-Constants.impuesto)*(Constants.endow_A + self.session.vars['s_maxAsolo']))
+        self.session.vars['p_nAnBmin'] = (Constants.endow_A + (Constants.endow_B + self.session.vars['s_minBsolo'])*Constants.impuesto)
+        self.session.vars['p_nAnBmax'] = (Constants.endow_A + (Constants.endow_B + self.session.vars['s_maxBsolo'])*Constants.impuesto)
+        self.session.vars['p_tAnBmin'] = (1-Constants.impuesto)*(Constants.endow_A + self.session.vars['s_minAcompa'])
+        self.session.vars['p_tAnBmax'] = (1-Constants.impuesto)*(Constants.endow_A + self.session.vars['s_maxAcompa'])
+
+        # pagos minimos y máximos de la formal
+
+        self.session.vars['p_tBtAmin'] = (Constants.endow_B + Constants.impuesto*(Constants.endow_A + self.session.vars['s_minAsolo']))
+        self.session.vars['p_tBtAmax'] = (Constants.endow_B + Constants.impuesto*(Constants.endow_A + self.session.vars['s_maxAsolo']))
+        self.session.vars['p_nBnAmin'] = ((1-Constants.impuesto)*(Constants.endow_B + self.session.vars['s_minBsolo']))
+        self.session.vars['p_nBnAmax'] = ((1-Constants.impuesto)*(Constants.endow_B + self.session.vars['s_maxBsolo']))
+        self.session.vars['p_nBtAmin'] = ((1-Constants.impuesto)*(Constants.endow_B + self.session.vars['s_minBcompa']))
+        self.session.vars['p_nBtAmax'] = ((1-Constants.impuesto)*(Constants.endow_B + self.session.vars['s_maxBcompa']))
+
+
 
 class Group(BaseGroup):
 
@@ -129,16 +144,16 @@ class Player(BasePlayer):
         '''Asignar una choque de productividad a cada jugador'''
         if self.id_in_group == 1:
             return dict(
-                prodAsolo = np.random.choice(Constants.elemAsolo,1,Constants.probAsolo),
-                prodAcompa = np.random.choice(Constants.elemAcompa,1,Constants.probAcompa)
+                prodAsolo = random.choices(self.session.vars['elemAsolo'],Constants.probAsolo,k=1),
+                prodAcompa = random.choices(self.session.vars['elemAcompa'],Constants.probAcompa,k=1)
             )
         else:
             return dict(
-                prodBsolo = np.random.choice(Constants.elemBsolo,1,Constants.probBsolo),
-                prodBcompa = np.random.choice(Constants.elemBcompa,1,Constants.probBcompa)
+                prodBsolo = random.choices(self.session.vars['elemBsolo'],Constants.probBsolo,k=1),
+                prodBcompa = random.choices(self.session.vars['elemBcompa'],Constants.probBcompa,k=1)
             )
             
-
+    # aqui defino un booleano tq a cada jugador le sale dos posibilidades de transitar o no.
     decision = models.BooleanField(label='¿ Le gustaría continuar en su sector actual o transitar al otro sector?',
                                     choices=[ 
                                         [True,'Transitar'],

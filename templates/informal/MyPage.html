@@ -6,11 +6,8 @@
 {% endblock %}
 
 {% block content %}
-
-    {{ Constants.a_star }}, {{ Constants.b_star }}, {{ Constants.s_minAsolo }}, {{ Constants.s_maxAsolo }}
-
-    {{ Constants.s_minBsolo }}, {{ Constants.s_maxBsolo }} , {{ Constants.s_minBcompa }}, {{ Constants.s_maxBcompa }}
-
+    {{ subsession.session.vars.a_star }}, {{ subsession.session.vars.b_star }}
+    
     {% include Constants.instructions_template_A %}
 
     <p>
@@ -60,9 +57,9 @@
       
             <th>Transitar</th>
       
-            <td>[{{ Constants.p_tAtBmin }} - {{ Constants.p_tAtBmax }}] , [{{ Constants.p_tBtAmin }} - {{ Constants.p_tBtAmax }}] </td>
+            <td>[{{ subsession.session.vars.p_tAtBmin }} - {{ subsession.session.vars.p_tAtBmax }}] , [{{ subsession.session.vars.p_tBtAmin }} - {{ subsession.session.vars.p_tBtAmax }}] </td>
       
-            <td>[{{ Constants.p_tAnBmin }} - {{ Constants.p_tAnBmax }}] , [{{ Constants.p_nBtAmin }} - {{ Constants.p_nBtAmax }}] </td>
+            <td>[{{ subsession.session.vars.p_tAnBmin }} - {{ subsession.session.vars.p_tAnBmax }}] , [{{ subsession.session.vars.p_nBtAmin }} - {{ subsession.session.vars.p_nBtAmax }}] </td>
       
           </tr>
       
@@ -72,7 +69,7 @@
       
             <td>[{{ Constants.p_nAtB }} - {{ Constants.p_nAtB }}] , [{{ Constants.p_tBnA }} - {{ Constants.p_tBnA }}] </td>
       
-            <td>[{{ Constants.p_nAnBmin }} - {{ Constants.p_nAnBmax }}] , [{{ Constants.p_nBnAmin }} - {{ Constants.p_nBnAmax }}] </td>
+            <td>[{{ subsession.session.vars.p_nAnBmin }} - {{ subsession.session.vars.p_nAnBmax }}] , [{{ subsession.session.vars.p_nBnAmin }} - {{ subsession.session.vars.p_nBnAmax }}] </td>
             
         </tbody>
       

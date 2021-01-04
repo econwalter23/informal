@@ -11,58 +11,59 @@
         A continuación se le muestra la <strong>matriz de pagos esperados</strong>:
     </p>
     
+
     <table class="egt">
 
-        <thead>
-      
-          <tr>
-      
-            <th></th>
+      <thead>
+    
+        <tr>
+    
+          <th></th>
 
-            <th></th>
-      
-            <th colspan="2">Empresa Formal</th>
-      
-          </tr>
-      
-          <tr>
-            
-            <th></th>
-      
-            <th scope="col"> Estrategias </th>
-      
-            <th>Transitar</th>
-      
-            <th>No transitar</th>
-      
-          </tr>
-      
-        </thead>
-      
-        <tbody>
-      
-          <tr>
-      
-            <th rowspan="3">Empresa Informal</th>
-      
-            <th>Transitar</th>
-      
-            <td>[{{ Constants.p_tAtBmin }} - {{ Constants.p_tAtBmax }}] , [{{ Constants.p_tBtAmin }} - {{ Constants.p_tBtAmax }}] </td>
-      
-            <td>[{{ Constants.p_tAnBmin }} - {{ Constants.p_tAnBmax }}] , [{{ Constants.p_nBtAmin }} - {{ Constants.p_nBtAmax }}] </td>
-      
-          </tr>
-      
-          <tr>
-      
-            <th>No transitar</th>
-      
-            <td>[{{ Constants.p_nAtB }} - {{ Constants.p_nAtB }}] , [{{ Constants.p_tBnA }} - {{ Constants.p_tBnA }}] </td>
-      
-            <td>[{{ Constants.p_nAnBmin }} - {{ Constants.p_nAnBmax }}] , [{{ Constants.p_nBnAmin }} - {{ Constants.p_nBnAmax }}] </td>
-            
-        </tbody>
-      
+          <th></th>
+    
+          <th colspan="2">Empresa Formal</th>
+    
+        </tr>
+    
+        <tr>
+          
+          <th></th>
+    
+          <th scope="col"> Estrategias </th>
+    
+          <th>Transitar</th>
+    
+          <th>No transitar</th>
+    
+        </tr>
+    
+      </thead>
+    
+      <tbody>
+    
+        <tr>
+    
+          <th rowspan="3">Empresa Informal</th>
+    
+          <th>Transitar</th>
+    
+          <td>[{{ subsession.session.vars.p_tAtBmin }} - {{ subsession.session.vars.p_tAtBmax }}] , [{{ subsession.session.vars.p_tBtAmin }} - {{ subsession.session.vars.p_tBtAmax }}] </td>
+    
+          <td>[{{ subsession.session.vars.p_tAnBmin }} - {{ subsession.session.vars.p_tAnBmax }}] , [{{ subsession.session.vars.p_nBtAmin }} - {{ subsession.session.vars.p_nBtAmax }}] </td>
+    
+        </tr>
+    
+        <tr>
+    
+          <th>No transitar</th>
+    
+          <td>[{{ Constants.p_nAtB }} - {{ Constants.p_nAtB }}] , [{{ Constants.p_tBnA }} - {{ Constants.p_tBnA }}] </td>
+    
+          <td>[{{ subsession.session.vars.p_nAnBmin }} - {{ subsession.session.vars.p_nAnBmax }}] , [{{ subsession.session.vars.p_nBnAmin }} - {{ subsession.session.vars.p_nBnAmax }}] </td>
+          
+      </tbody>
+    
     </table>
 
     {% formfields %}
