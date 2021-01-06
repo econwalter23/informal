@@ -6,22 +6,25 @@
 {% endblock %}
 
 {% block content %}
-    {{ subsession.session.vars.a_star }}, {{ subsession.session.vars.b_star }}
+    
     
     {% include Constants.instructions_template_A %}
 
     <p>
       Estas guías estarán disponibles en las siguientes pantallas en caso desees consultarlas.
     </p>
-    </p>
+    
+    <h2>
+      Usted pertenece al sector  <strong>{{player.role}}</strong> .   
+    </h2>
 
     <p>
-      Usted pertenece al sector {{ player.role }}.   
-    <p>
+    
       A continuación se le muestra la <strong>matriz de pagos esperados</strong> con los valores mínimos y máximos:
     </p>
 
-    <table class="egt">
+    <table  class='table table-bordered text-center'
+            style='width: auto; margin: auto'>
 
         <thead>
       

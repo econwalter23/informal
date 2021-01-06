@@ -8,8 +8,13 @@
 {% block content %}
 
     <p>
-        Sus beneficios finales son {{player.payoff}}.
-    </p>
+        Sus beneficios de esta ronda son:
+        {% if player.id_in_group == 1 %}
+            {{ player.payoff }}
+        {% else %}
+            {{ player.payoff }}
+        {% endif %}
+    </p>    
 
     {% next_button %}
 {% endblock %}

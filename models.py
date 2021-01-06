@@ -89,29 +89,29 @@ class Subsession(BaseSubsession):
         self.session.vars['elemBcompa'] = [self.session.vars['s_minBcompa'], self.session.vars['s_maxBcompa']]
 
         # pagos minimos y máximos de la informal
-        self.session.vars['p_tAtBmin'] = ((1-Constants.impuesto)*(Constants.endow_A + self.session.vars['s_minAsolo']))
-        self.session.vars['p_tAtBmax'] = ((1-Constants.impuesto)*(Constants.endow_A + self.session.vars['s_maxAsolo']))
-        self.session.vars['p_nAnBmin'] = (Constants.endow_A + (Constants.endow_B + self.session.vars['s_minBsolo'])*Constants.impuesto)
-        self.session.vars['p_nAnBmax'] = (Constants.endow_A + (Constants.endow_B + self.session.vars['s_maxBsolo'])*Constants.impuesto)
-        self.session.vars['p_tAnBmin'] = (1-Constants.impuesto)*(Constants.endow_A + self.session.vars['s_minAcompa'])
-        self.session.vars['p_tAnBmax'] = (1-Constants.impuesto)*(Constants.endow_A + self.session.vars['s_maxAcompa'])
+        self.session.vars['p_tAtBmin'] = round((1-Constants.impuesto)*(Constants.endow_A + self.session.vars['s_minAsolo']),1)
+        self.session.vars['p_tAtBmax'] = round((1-Constants.impuesto)*(Constants.endow_A + self.session.vars['s_maxAsolo']),1)
+        self.session.vars['p_nAnBmin'] = round(Constants.endow_A + (Constants.endow_B + self.session.vars['s_minBsolo'])*Constants.impuesto,1)
+        self.session.vars['p_nAnBmax'] = round(Constants.endow_A + (Constants.endow_B + self.session.vars['s_maxBsolo'])*Constants.impuesto,1)
+        self.session.vars['p_tAnBmin'] = round((1-Constants.impuesto)*(Constants.endow_A + self.session.vars['s_minAcompa']),1)
+        self.session.vars['p_tAnBmax'] = round((1-Constants.impuesto)*(Constants.endow_A + self.session.vars['s_maxAcompa']),1)
 
         # pagos minimos y máximos de la formal
 
-        self.session.vars['p_tBtAmin'] = (Constants.endow_B + Constants.impuesto*(Constants.endow_A + self.session.vars['s_minAsolo']))
-        self.session.vars['p_tBtAmax'] = (Constants.endow_B + Constants.impuesto*(Constants.endow_A + self.session.vars['s_maxAsolo']))
-        self.session.vars['p_nBnAmin'] = ((1-Constants.impuesto)*(Constants.endow_B + self.session.vars['s_minBsolo']))
-        self.session.vars['p_nBnAmax'] = ((1-Constants.impuesto)*(Constants.endow_B + self.session.vars['s_maxBsolo']))
-        self.session.vars['p_nBtAmin'] = ((1-Constants.impuesto)*(Constants.endow_B + self.session.vars['s_minBcompa']))
-        self.session.vars['p_nBtAmax'] = ((1-Constants.impuesto)*(Constants.endow_B + self.session.vars['s_maxBcompa']))
+        self.session.vars['p_tBtAmin'] = round(Constants.endow_B + Constants.impuesto*(Constants.endow_A + self.session.vars['s_minAsolo']),1)
+        self.session.vars['p_tBtAmax'] = round(Constants.endow_B + Constants.impuesto*(Constants.endow_A + self.session.vars['s_maxAsolo']),1)
+        self.session.vars['p_nBnAmin'] = round((1-Constants.impuesto)*(Constants.endow_B + self.session.vars['s_minBsolo']),1)
+        self.session.vars['p_nBnAmax'] = round((1-Constants.impuesto)*(Constants.endow_B + self.session.vars['s_maxBsolo']),1)
+        self.session.vars['p_nBtAmin'] = round((1-Constants.impuesto)*(Constants.endow_B + self.session.vars['s_minBcompa']),1)
+        self.session.vars['p_nBtAmax'] = round((1-Constants.impuesto)*(Constants.endow_B + self.session.vars['s_maxBcompa']),1)
 
         for p in self.get_players():
             if p.id_in_group == 1:
-                p.participant.vars['prodsolo'] = random.choices(self.session.vars['elemAsolo'],Constants.probAsolo,k=1)
-                p.participant.vars['prodcompa'] = random.choices(self.session.vars['elemAcompa'],Constants.probAcompa,k=1)
+                p.participant.vars['prodAsolo'] = random.choices(self.session.vars['elemAsolo'],Constants.probAsolo,k=1)
+                p.participant.vars['prodAcompa'] = random.choices(self.session.vars['elemAcompa'],Constants.probAcompa,k=1)
             else:
-                p.participant.vars['prodcompa'] = random.choices(self.session.vars['elemBcompa'],Constants.probBcompa,k=1)
-                p.participant.vars['prodsolo'] = random.choices(self.session.vars['elemBsolo'],Constants.probBsolo,k=1)
+                p.participant.vars['prodBcompa'] = random.choices(self.session.vars['elemBcompa'],Constants.probBcompa,k=1)
+                p.participant.vars['prodBsolo'] = random.choices(self.session.vars['elemBsolo'],Constants.probBsolo,k=1)
                 
 
 
@@ -124,19 +124,19 @@ class Group(BaseGroup):
         
         if p1.decision == 'Transitar':
             if p2.decision == 'Transitar':
-                p1.payoff = (1-Constants.impuesto)*(Constants.endow_A + p1.participant.vars['prodsolo'][0])
-                p2.payoff = Constants.endow_B + Constants.impuesto*(Constants.endow_A + p1.participant.vars['prodsolo'][0])
+                p1.payoff = round(float((1-Constants.impuesto)*(Constants.endow_A + p1.participant.vars['prodAsolo'][0])),1)
+                p2.payoff = round(float(Constants.endow_B + Constants.impuesto*(Constants.endow_A + p1.participant.vars['prodAsolo'][0])),1)
             else:
                 
-                p1.payoff = (1-Constants.impuesto)*(Constants.endow_A + p1.participant.vars['prodcompa'][0])
-                p2.payoff = (1-Constants.impuesto)*(Constants.endow_B + p2.participant.vars['prodcompa'][0])
+                p1.payoff = round(float((1-Constants.impuesto)*(Constants.endow_A + p1.participant.vars['prodAcompa'][0])),1)
+                p2.payoff = round(float((1-Constants.impuesto)*(Constants.endow_B + p2.participant.vars['prodBcompa'][0])),1)
         else:    
             if p2.decision == 'Transitar':
                 p1.payoff = Constants.endow_A
                 p2.payoff = Constants.endow_B
             else:
-                p1.payoff = Constants.endow_A + Constants.impuesto*(Constants.endow_B + p2.participant.vars['prodsolo'][0])
-                p2.payoff = (1-Constants.impuesto)*(Constants.endow_B + p2.participant.vars['prodsolo'][0])
+                p1.payoff = round(float(Constants.endow_A + Constants.impuesto*(Constants.endow_B + p2.participant.vars['prodBsolo'][0])),1)
+                p2.payoff = round(float((1-Constants.impuesto)*(Constants.endow_B + p2.participant.vars['prodBsolo'][0])),1)
     
 
 class Player(BasePlayer):
@@ -148,19 +148,7 @@ class Player(BasePlayer):
         else:
             return 'Formal'
 
-   # def prod(self):
-        #'''Asignar una choque de productividad a cada jugador'''
-        #if self.id_in_group == 1:
-            #return dict(
-                #prodAsolo = random.choices(self.session.vars['elemAsolo'],Constants.probAsolo,k=1),
-                #prodAcompa = random.choices(self.session.vars['elemAcompa'],Constants.probAcompa,k=1)
-            #)
-        #else:
-            #return dict(
-                
-            #)
-
-        
+      
     # aqui defino un booleano tq a cada jugador le sale dos posibilidades de transitar o no.
     decision = models.BooleanField(label='¿ Le gustaría continuar en su sector actual o transitar al otro sector?',
                                     choices=[ 
