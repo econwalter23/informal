@@ -15,24 +15,24 @@ author = 'Richard Asto & Walter Ruelas'
 
 doc = """
 Este es un juego que busca contrastar los resultados de un modelo de teoria de juegos en la que transitan
-empresas del sector formal al informal
+empresas del sector formal al informal y viceversa.
 """
 
 class Constants(BaseConstants):
 
     name_in_url = 'informal_game'
     players_per_group = 2
-    players_per_session = 20
-    num_rounds = 5
+    players_per_session = 10
+    num_rounds = 15
     
     #endowments y parámetros iniciales 
     endow_B = float(100)
     endow_A = float(endow_B*0.25)
+
     impuesto = float(0.18)
     p_like = float(0.5)
     q_like = float(0.5)
-    
-    
+        
     #rango de las choques de productividad
     A_solo = 1
     A_compa = 2 
@@ -54,7 +54,6 @@ class Constants(BaseConstants):
 
     # pagos esperados minimos y máximos de la formal
     p_tBnA = c(endow_B)
-
 
     # intrucciones
     instructions_template = 'informal/instructions.html'
@@ -79,7 +78,7 @@ class Subsession(BaseSubsession):
         self.session.vars['elemAsolo'] = [self.session.vars['s_minAsolo'] , self.session.vars['s_maxAsolo']]
         self.session.vars['elemAcompa'] = [self.session.vars['s_minAcompa'], self.session.vars['s_maxAcompa']]
 
-        # rangos de la empresa formal si se queda sola o comparte
+            # rangos de la empresa formal si se queda sola o comparte
         self.session.vars['s_minBsolo'] = -(Constants.B_solo*Constants.endow_B)
         self.session.vars['s_maxBcompa'] = (Constants.B_compa*Constants.endow_B)
         self.session.vars['s_maxBsolo'] = float( ((self.session.vars['b_star']*Constants.impuesto/(1-Constants.impuesto))*Constants.endow_B/(Constants.alto_solo))-((1-Constants.alto_solo)/(Constants.alto_solo))*self.session.vars['s_minBsolo'] )
@@ -88,7 +87,7 @@ class Subsession(BaseSubsession):
         self.session.vars['elemBsolo'] = [self.session.vars['s_minBsolo'], self.session.vars['s_maxBsolo']]
         self.session.vars['elemBcompa'] = [self.session.vars['s_minBcompa'], self.session.vars['s_maxBcompa']]
 
-        # pagos minimos y máximos de la informal
+            # pagos minimos y máximos de la informal
         self.session.vars['p_tAtBmin'] = round((1-Constants.impuesto)*(Constants.endow_A + self.session.vars['s_minAsolo']),1)
         self.session.vars['p_tAtBmax'] = round((1-Constants.impuesto)*(Constants.endow_A + self.session.vars['s_maxAsolo']),1)
         self.session.vars['p_nAnBmin'] = round(Constants.endow_A + (Constants.endow_B + self.session.vars['s_minBsolo'])*Constants.impuesto,1)
@@ -148,8 +147,8 @@ class Player(BasePlayer):
         else:
             return 'Formal'
 
-      
-    # aqui defino un booleano tq a cada jugador le sale dos posibilidades de transitar o no.
+    
+    # aqui defino un booleano tq' a cada jugador le sale dos posibilidades de transitar o no.
     decision = models.BooleanField(label='¿ Le gustaría continuar en su sector actual o transitar al otro sector?',
                                     choices=[ 
                                         [True,'Transitar'],
