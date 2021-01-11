@@ -46,7 +46,7 @@ class Results(Page):
     def vars_for_template(self):
         return dict(participant_id = self.participant.label)
 
-class Pagos(Page)
+class Pagos(Page):
 
     def vars_for_template(self):
         return dict(participant_id = self.participant.label)
