@@ -222,7 +222,7 @@ class Subsession(BaseSubsession):
                 
 class Group(BaseGroup):
 
-      
+    
     def set_payoffs(self):
         '''Calcula el pago de los participantes tomando en cuenta la decision del otro'''
         p1 = self.get_player_by_id(1)
@@ -231,39 +231,45 @@ class Group(BaseGroup):
         if p1.decision == True:
             
             if p2.decision == True:
-                p1.payoff = round(float((1-Constants.impuesto)*(self.session.vars[f'endow_A_{self.round_number}'] + p1.participant.vars[f'prodAsolo_{self.round_number}'][0])),1)
-                p2.payoff = round(float(self.session.vars[f'endow_B_{self.round_number}'] + Constants.impuesto*(self.session.vars[f'endow_A_{self.round_number}']+p1.participant.vars[f'prodAsolo_{self.round_number}'][0])))
+                p1.payoff = round(float((1-Constants.impuesto)*(self.session.vars[f'endow_A_{self.round_number}'] + p1.participant.vars[f'prodAsolo_{self.round_number}'][0])),1)/self.session.vars[f'endow_A_{self.round_number}']
+                p2.payoff = round(float(self.session.vars[f'endow_B_{self.round_number}'] + Constants.impuesto*(self.session.vars[f'endow_A_{self.round_number}']+p1.participant.vars[f'prodAsolo_{self.round_number}'][0])),1)/ self.session.vars[f'endow_B_{self.round_number}']
             else:
-                print(f'el jugador 2 ha decidido {p2.decision}')        
-                p1.payoff = round(float((1-Constants.impuesto)*(self.session.vars[f'endow_A_{self.round_number}'] + p1.participant.vars[f'prodAcompa_{self.round_number}'][0])),1)
-                p2.payoff = round(float((1-Constants.impuesto)*(self.session.vars[f'endow_B_{self.round_number}'] + p2.participant.vars[f'prodBcompa_{self.round_number}'][0])),1)
+                        
+                p1.payoff = round(float((1-Constants.impuesto)*(self.session.vars[f'endow_A_{self.round_number}'] + p1.participant.vars[f'prodAcompa_{self.round_number}'][0])),1)/self.session.vars[f'endow_A_{self.round_number}']
+                p2.payoff = round(float((1-Constants.impuesto)*(self.session.vars[f'endow_B_{self.round_number}'] + p2.participant.vars[f'prodBcompa_{self.round_number}'][0])),1)/self.session.vars[f'endow_B_{self.round_number}']
         else:    
             if p2.decision == True:
-                p1.payoff = self.session.vars[f'endow_A_{self.round_number}']
-                p2.payoff = self.session.vars[f'endow_B_{self.round_number}']
+                p1.payoff = 1
+                p2.payoff = 1
             else:
-                p1.payoff = round((self.session.vars[f'endow_A_{self.round_number}'] + Constants.impuesto*(self.session.vars[f'endow_B_{self.round_number}'] + p2.participant.vars[f'prodBsolo_{self.round_number}'][0])),1)
-                p2.payoff = round(((1-Constants.impuesto)*(self.session.vars[f'endow_B_{self.round_number}'] + p2.participant.vars[f'prodBsolo_{self.round_number}'][0])),1)
-
+                p1.payoff = round((self.session.vars[f'endow_A_{self.round_number}'] + Constants.impuesto*(self.session.vars[f'endow_B_{self.round_number}'] + p2.participant.vars[f'prodBsolo_{self.round_number}'][0])),1)/ self.session.vars[f'endow_A_{self.round_number}']
+                p2.payoff = round(((1-Constants.impuesto)*(self.session.vars[f'endow_B_{self.round_number}'] + p2.participant.vars[f'prodBsolo_{self.round_number}'][0])),1)/ self.session.vars[f'endow_B_{self.round_number}']
     
-    def set_ratio(self):
-        '''Calcula el ratio de los participantes'''
-        p1 = self.get_player_by_id(1)  
+    def set_ratios(self):
+        '''Calcula el ratio de los participantes tomando en cuenta la decision del otro'''
+        p1 = self.get_player_by_id(1)
         p2 = self.get_player_by_id(2)
-        
-        x=[1,Constants.num_rounds+1]
-        p1.participant.rendow_A = []
-        p2.participant.rendow_B = []
-        for i in x:
-            p1.participant.vars[f'p1.ratio_{i}'] = round(float(p1.payoff / self.session.vars[f'endow_A_{i}']),1)
-            p2.participant.vars[f'p2.ratio_{i}'] = round(float(p2.payoff / self.session.vars[f'endow_B__{i}']),1)
 
-            p1.participant.rendow_A.append(p1.participant.vars[f'p1.ratio_{i}'])
-            p1.participant.vars['p1.ratio'] = p1.participant.rendow_A
+        if p1.decision == True:
             
-            p2.participant.rendow_B.append(p2.participant.vars[f'p2.ratio_{i}'])
-            p2.participant.vars['p2.ratio'] = p2.participant.rendow_B
-     
+            if p2.decision == True:
+                p1.ratio = round(float((1-Constants.impuesto)*(self.session.vars[f'endow_A_{self.round_number}'] + p1.participant.vars[f'prodAsolo_{self.round_number}'][0])),0)
+                p2.ratio = round(float(self.session.vars[f'endow_B_{self.round_number}'] + Constants.impuesto*(self.session.vars[f'endow_A_{self.round_number}']+p1.participant.vars[f'prodAsolo_{self.round_number}'][0])),0)
+            else:
+                        
+                p1.ratio = round(float((1-Constants.impuesto)*(self.session.vars[f'endow_A_{self.round_number}'] + p1.participant.vars[f'prodAcompa_{self.round_number}'][0])),0)
+                p2.ratio = round(float((1-Constants.impuesto)*(self.session.vars[f'endow_B_{self.round_number}'] + p2.participant.vars[f'prodBcompa_{self.round_number}'][0])),0)
+        else:    
+            if p2.decision == True:
+                p1.ratio = self.session.vars[f'endow_A_{self.round_number}']
+                p2.ratio = self.session.vars[f'endow_B_{self.round_number}']
+            else:
+                p1.ratio = round((self.session.vars[f'endow_A_{self.round_number}'] + Constants.impuesto*(self.session.vars[f'endow_B_{self.round_number}'] + p2.participant.vars[f'prodBsolo_{self.round_number}'][0])),0)
+                p2.ratio = round(((1-Constants.impuesto)*(self.session.vars[f'endow_B_{self.round_number}'] + p2.participant.vars[f'prodBsolo_{self.round_number}'][0])),0)
+
+    def after_all_players_arrive_method(self):
+        self.set_payoffs()
+        self.set_ratios()
 
 class Player(BasePlayer):
 
@@ -282,6 +288,8 @@ class Player(BasePlayer):
                                         [False, 'No transitar']
                                     ]
                                     )
+    
+    ratio = models.FloatField()
 
     
 

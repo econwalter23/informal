@@ -10,8 +10,14 @@
     <font color="burlywood"><h4 align="right">Tu Etiqueta: {{ participant_id }}</h4></font>
     <p>
         Sus beneficios de esta ronda son:
-            {{ player.payoff }}
+            {{ player.ratio }}
         
+        y su ratio de esta ronda es:
+        
+            {{ player.payoff }} 
+                                
+            
+            
     </p>    
 
     {% next_button %}

@@ -94,7 +94,7 @@ class ResultsWaitPage(WaitPage):
     def vars_for_template(self):
         return dict(participant_id = self.participant.label)
 
-    after_all_players_arrive = 'set_payoffs'
+    after_all_players_arrive = 'after_all_players_arrive_method'
 
 class Results(Page):
     
@@ -102,6 +102,9 @@ class Results(Page):
         return dict(participant_id = self.participant.label)
 
 class Pagos(Page):
+
+    def is_displayed(self):
+        return self.round_number == 7
 
     def vars_for_template(self):
         return dict(participant_id = self.participant.label)
