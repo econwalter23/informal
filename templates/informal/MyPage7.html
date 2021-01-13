@@ -10,14 +10,14 @@
     <font color="burlywood"><h4 align="right">Tu Etiqueta: {{ participant_id }}</h4></font>   
 
     <h2>
-      Usted se mantiene en el sector <strong>{{player.role}}</strong> y tiene una dotación inicial de:
+      Usted se mantiene en el sector  <strong>{{player.role}}</strong> y tiene una dotación inicial de:
 
       {% if player.id_in_group == 1 %}
-        {{ subsession.session.vars.endow_A.1 }}
+        {{ subsession.session.vars.endow_A.6 }}
       {% else %}
-        {{ subsession.session.vars.endow_B.1 }}
+        {{ subsession.session.vars.endow_B.6 }}
       {% endif %}
-      
+
     </h2>    
 
 
@@ -63,9 +63,9 @@
       
             <th>Transitar</th>
       
-            <td>[{{ subsession.session.vars.p_tAtBmin.1 }} - {{ subsession.session.vars.p_tAtBmax.1 }}] , [{{ subsession.session.vars.p_tBtAmin.1 }} - {{ subsession.session.vars.p_tBtAmax.1 }}] </td>
+            <td>[{{ subsession.session.vars.p_tAtBmin.6 }} - {{ subsession.session.vars.p_tAtBmax.6 }}] , [{{ subsession.session.vars.p_tBtAmin.6 }} - {{ subsession.session.vars.p_tBtAmax.6 }}] </td>
       
-            <td>[{{ subsession.session.vars.p_tAnBmin.1 }} - {{ subsession.session.vars.p_tAnBmax.1 }}] , [{{ subsession.session.vars.p_nBtAmin.1 }} - {{ subsession.session.vars.p_nBtAmax.1 }}] </td>
+            <td>[{{ subsession.session.vars.p_tAnBmin.6 }} - {{ subsession.session.vars.p_tAnBmax.6 }}] , [{{ subsession.session.vars.p_nBtAmin.6 }} - {{ subsession.session.vars.p_nBtAmax.6 }}] </td>
       
           </tr>
       
@@ -73,9 +73,9 @@
       
             <th>No transitar</th>
       
-            <td>[{{ subsession.session.vars.endow_A.1 }} - {{ subsession.session.vars.endow_A.1 }}] , [{{ subsession.session.vars.endow_B.1 }} - {{ subsession.session.vars.endow_B.1 }}] </td>
+            <td>[{{ subsession.session.vars.endow_A.6 }} - {{ subsession.session.vars.endow_A.6 }}] , [{{ subsession.session.vars.endow_B.6 }} - {{ subsession.session.vars.endow_B.6 }}] </td>
       
-            <td>[{{ subsession.session.vars.p_nAnBmin.1 }} - {{ subsession.session.vars.p_nAnBmax.1 }}] , [{{ subsession.session.vars.p_nBnAmin.1 }} - {{ subsession.session.vars.p_nBnAmax.1 }}] </td>
+            <td>[{{ subsession.session.vars.p_nAnBmin.6 }} - {{ subsession.session.vars.p_nAnBmax.6 }}] , [{{ subsession.session.vars.p_nBnAmin.6 }} - {{ subsession.session.vars.p_nBnAmax.6 }}] </td>
             
         </tbody>
       

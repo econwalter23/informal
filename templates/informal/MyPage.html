@@ -16,7 +16,14 @@
     </p>
     
     <h2>
-      Usted pertenece al sector  <strong>{{player.role}}</strong> .   
+      Usted pertenece al sector  <strong>{{player.role}}</strong> y tiene una dotación inicial de:
+
+      {% if player.id_in_group == 1 %}
+        {{ subsession.session.vars.endow_A.0 }}
+      {% else %}
+        {{ subsession.session.vars.endow_B.0 }}
+      {% endif %}
+
     </h2>
 
     <p>
@@ -61,9 +68,9 @@
       
             <th>Transitar</th>
       
-            <td>[{{ subsession.session.vars.p_tAtBmin }} - {{ subsession.session.vars.p_tAtBmax }}] , [{{ subsession.session.vars.p_tBtAmin }} - {{ subsession.session.vars.p_tBtAmax }}] </td>
+            <td>[{{ subsession.session.vars.p_tAtBmin.0 }} - {{ subsession.session.vars.p_tAtBmax.0 }}] , [{{ subsession.session.vars.p_tBtAmin.0 }} - {{ subsession.session.vars.p_tBtAmax.0 }}] </td>
       
-            <td>[{{ subsession.session.vars.p_tAnBmin }} - {{ subsession.session.vars.p_tAnBmax }}] , [{{ subsession.session.vars.p_nBtAmin }} - {{ subsession.session.vars.p_nBtAmax }}] </td>
+            <td>[{{ subsession.session.vars.p_tAnBmin.0 }} - {{ subsession.session.vars.p_tAnBmax.0 }}] , [{{ subsession.session.vars.p_nBtAmin.0 }} - {{ subsession.session.vars.p_nBtAmax.0 }}] </td>
       
           </tr>
       
@@ -71,9 +78,9 @@
       
             <th>No transitar</th>
       
-            <td>[{{ Constants.p_nAtB }} - {{ Constants.p_nAtB }}] , [{{ Constants.p_tBnA }} - {{ Constants.p_tBnA }}] </td>
+            <td>[{{ subsession.session.vars.endow_A.0 }} - {{ subsession.session.vars.endow_A.0 }}] , [{{ subsession.session.vars.endow_B.0 }} - {{ subsession.session.vars.endow_B.0 }}] </td>
       
-            <td>[{{ subsession.session.vars.p_nAnBmin }} - {{ subsession.session.vars.p_nAnBmax }}] , [{{ subsession.session.vars.p_nBnAmin }} - {{ subsession.session.vars.p_nBnAmax }}] </td>
+            <td>[{{ subsession.session.vars.p_nAnBmin.0 }} - {{ subsession.session.vars.p_nAnBmax.0 }}] , [{{ subsession.session.vars.p_nBnAmin.0 }} - {{ subsession.session.vars.p_nBnAmax.0 }}] </td>
             
         </tbody>
       

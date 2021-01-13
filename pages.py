@@ -29,11 +29,66 @@ class MyPage2(Page):
     form_fields = ['decision']
     
     def is_displayed(self):
-        return self.round_number > 1
+        return self.round_number == 2
 
     def vars_for_template(self):
         return dict(participant_id = self.participant.label)    
+
+class MyPage3(Page):
+
+    form_model ='player'
+    form_fields = ['decision']
     
+    def is_displayed(self):
+        return self.round_number == 3
+
+    def vars_for_template(self):
+        return dict(participant_id = self.participant.label)
+
+class MyPage4(Page):
+
+    form_model ='player'
+    form_fields = ['decision']
+    
+    def is_displayed(self):
+        return self.round_number == 4
+
+    def vars_for_template(self):
+        return dict(participant_id = self.participant.label)
+
+class MyPage5(Page):
+
+    form_model ='player'
+    form_fields = ['decision']
+    
+    def is_displayed(self):
+        return self.round_number == 5
+
+    def vars_for_template(self):
+        return dict(participant_id = self.participant.label)
+
+class MyPage6(Page):
+
+    form_model ='player'
+    form_fields = ['decision']
+    
+    def is_displayed(self):
+        return self.round_number == 6
+
+    def vars_for_template(self):
+        return dict(participant_id = self.participant.label)
+
+class MyPage7(Page):
+
+    form_model ='player'
+    form_fields = ['decision']
+    
+    def is_displayed(self):
+        return self.round_number == 7
+
+    def vars_for_template(self):
+        return dict(participant_id = self.participant.label)
+
 class ResultsWaitPage(WaitPage):
 
     def vars_for_template(self):
@@ -53,4 +108,4 @@ class Pagos(Page):
         
 
 
-page_sequence = [Introduction, MyPage, MyPage2, ResultsWaitPage, Results]
+page_sequence = [Introduction, MyPage, MyPage2, MyPage3, MyPage4, MyPage5, MyPage6, MyPage7, ResultsWaitPage, Results, Pagos]
