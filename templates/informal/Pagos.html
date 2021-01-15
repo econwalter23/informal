@@ -7,6 +7,11 @@
 
 {% block content %}
 <font color="burlywood"><h4 align="right">Tu Etiqueta: {{ participant_id }}</h4></font>
+
+<p>
+    Su pago final, incluido el pago fijo de S/ 5.00 es: {{ player.participant.payoff_plus_participation_fee }} 
+</p>
+
 <br>
     Para proceder con tu pago, entra al enlace abajo. Este enlace te redirigirá a un formulario para brindar la información para que recibas tu pago.
     <br><br>
@@ -21,5 +26,8 @@
     <br><br>
     Equipo E2LabUP
 
+<p>
+        {% include Constants.contact_template %}
+</p>
 {% endblock %}
 

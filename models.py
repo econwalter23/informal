@@ -51,6 +51,7 @@ class Constants(BaseConstants):
     instructions_button = "informal/Instructions_Button.html"
     instructions_template_A = 'informal/instructionsA.html'
     instructions_buttonA = "informal/Instructions_ButtonA.html"
+    contact_template = "informal/Contactenos.html"
     
 
 class Subsession(BaseSubsession):

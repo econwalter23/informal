@@ -12,7 +12,7 @@
         Sus beneficios de esta ronda son:
             {{ player.ratio }}
         
-        y su ratio de esta ronda es:
+        y su puntos de esta ronda son:
         
             {{ player.payoff }} 
                                 
@@ -21,6 +21,11 @@
     </p>    
 
     {% next_button %}
+
+    <p>
+        {% include Constants.contact_template %}
+    </p>
+
 {% endblock %}
 
 
