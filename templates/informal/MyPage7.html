@@ -22,7 +22,24 @@
 
 
     <p>
-        A continuación se le muestra la <strong>matriz de pagos esperados</strong> con los valores mínimos y máximos:
+    
+      A continuación se le muestra la <strong>matriz de pagos esperados</strong> con los valores mínimos y máximos, cada corchete contiene un valor
+      mínimo y otro máximo posible para un jugador, tal es así que los primeros corchetes corresponden al jugador del sector informal y los segundos corchetes al jugador del sector formal.
+    </p>
+
+    <p>
+      Recuerde que usted sea empresa formal o infroma obtendrá el valor máximo de cada corchete con 90 por ciento de probabilidad si solo hay una empresa en el sector formal, si hubiese dos empresas
+      en el sector formal obtendra el valor máximo de cada corchete solo con 10 por ciento. 
+    </p>
+
+    <p>
+      Por ejemplo si la empresa informal transita y la formal también transita, <strong>solo habria una empresa en el sector formal</strong> (en este caso la que antes era la empresa informal se vuelve formal). Entonces
+      la empresa informal obtendría {{subsession.session.vars.p_tAtBmax.6}} con 90 por ciento de probabilidad y la formal {{ subsession.session.vars.p_tBtAmax.6 }} también con 90 por ciento de probabilidad.   
+    </p>
+
+    <p>
+      Mientas que si solo la informal transita y la formal no transita entonces, <strong>habría dos empresas en el sector formal</strong>. En este caso la empresa informal obtendría {{ subsession.session.vars.p_tAnBmax.6 }} 
+      solo con 10 por ciento de probabilidad y la empresa formal {{ subsession.session.vars.p_nBtAmax.6 }} tambien con solo 10 por ciento de probabilidad.
     </p>
     
 
